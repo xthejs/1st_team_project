@@ -1,0 +1,1276 @@
+@charset "utf-8";
+
+#skip_nav {position: relative;}
+
+#skip_nav>a {
+    position: absolute;
+    width: 120px;
+    height: 50px;
+    display: block;
+    background-color: rgb(0, 0, 0);
+    color: #f1f1f1;
+    text-align: center;
+    font-weight: bold;
+    line-height: 50px;
+    top: -45px;
+    left: 0;
+}
+#skip_nav>a:active,
+#skip_nav>a:focus {top: 0;}
+
+#scrollbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(to top, #008DDA, #41C9E2, #ACE2E1);
+    opacity: 0.2;
+    z-index: 100;
+}
+
+.container {
+    width: 1440px;
+    margin: 0 auto;
+}
+
+/* .main  / 욕망의 항아리와 그 친구들 */
+.main {
+    width: 100%;
+    height: 100vh;
+    /* display: none; */
+    background: url(../images/1_main/main_bg.png) no-repeat center;
+    background-size: cover;
+}
+
+
+
+/* 게임타이틀 전체영역 */
+.pot {
+    width: 100%;
+    height: calc(100vh - 100px);
+    /* background-color: cadetblue; */
+    /* 해당영역에 배경색 넣으면 게임타이틀 전면만 보임.  차후 상의하여 결정 */
+
+    position: relative;
+    /* 기준점 설정 */
+
+    perspective: 10000px;
+    transform-style: preserve-3d;
+    /* 중심지점위한 깊이값 부여 '필수': 미부여시 욕망의 항아리를 기준으로 게임타이틀이 회전하지 않음 */
+    
+}
+
+/* 욕망의 항아리 */
+.greed {
+    width: 500px;
+    height: 500px;
+    z-index: 100;
+    /* 차후 이미지로 대체 */
+
+    position: absolute;
+    /* 영역 고정 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* 위치 정렬 */
+    cursor: pointer;
+   
+}
+
+.greed p {
+    font-family: myfont;
+    font-size: 90px;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* TAMYOK 물결효과 */
+.wave {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wave p:nth-child(1) {
+    color: #fff;
+    text-shadow: -2px 2px 0px #060D11,
+        -4px 4px 0px #060D11,
+        -6px 6px 0px #060D11,
+        -8px 8px 0px #060D11,
+        -18px 18px 20px rgba(6, 13, 17, 0.5),
+        -18px 18px 50px rgba(6, 13, 17, 0.5);
+}
+
+.wave p:nth-child(2) {
+    color: #a1efff;
+    opacity: 0.5;
+    animation: wave 3s ease-in-out infinite;
+}
+
+.wave p:nth-child(3) {
+    color: #a1efff;
+    opacity: 0.5;
+    animation: wave 6s ease-in-out infinite;
+}
+
+.wave p:nth-child(4) {
+    color: #a1efff;
+    animation: wave 4s ease-in-out infinite;
+}
+
+@keyframes wave {
+
+    0%,
+    100% {
+        clip-path: polygon(0 53%, 21% 44%, 36% 50%, 49% 57%, 62% 64%, 74% 70%, 100% 51%, 100% 100%, 0 100%);
+    }
+
+    50% {
+        clip-path: polygon(0% 50%, 30% 70%, 35% 70%, 51% 66%, 60% 59%, 77% 52%, 100% 65%, 100% 100%, 0% 110%);
+    }
+}
+
+/* 주변을 도는 게임 타이틀의 부모 */
+.titlebox {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    /* 위치지정 */
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* 추후 이미지 사용을 위해 flex처리(자식인 각게임타이틀) 및 가운데 정렬 */
+
+    transform-style: preserve-3d;
+    /*  3차원 효과를 위해 부여 */
+}
+
+.titlebox.on {
+    animation: binggle 10s linear infinite;
+}
+
+/* 애니메이션 효과 */
+@keyframes binggle {
+    0% {
+        transform: rotateX(-4deg) rotateY(0deg);
+    }
+
+    100% {
+        transform: rotateX(-4deg) rotateY(360deg);
+    }
+}
+
+.titlebox .title {
+    width: 0;
+    transform: rotateY(calc(var(--b) * 1deg)) translateZ(0px);
+    transition: all 1s;
+}
+
+/* 게임 타이틀 전체*/
+.titlebox.on .title {
+    /* width: 300px; */
+    position: absolute;
+    transform: rotateY(calc(var(--b) * 1deg)) translateZ(450px);
+    animation: pong 6s linear forwards;
+}
+
+.titlebox .title.active {
+    /* width: 300px; */
+    position: absolute;
+    transform: rotateY(calc(var(--b) * 1deg)) translateZ(450px);
+}
+
+.titlebox .box1.active {
+    animation: pong 2s linear forwards;
+}
+
+.titlebox .box2.active {
+    animation: pong 3s linear forwards;
+}
+
+.titlebox .box3.active {
+    animation: pong 4s linear forwards;
+}
+
+.titlebox .box4.active {
+    animation: pong 5s linear forwards;
+}
+
+.titlebox .box5.active {
+    animation: pong 6s linear forwards;
+}
+
+@keyframes pong {
+    0% {
+        opacity: 0.5;
+        width: 0;
+        top: 0;
+        transform: rotateZ(0);
+    }
+
+    25% {
+        opacity: 0.5;
+        width: 50px;
+        top: -370px;
+        transform: rotateZ(10px);
+    }
+
+    50% {
+        opacity: 0.8;
+        width: 200px;
+        top: -320px;
+    }
+
+    60% {
+        opacity: 1;
+        width: 250px;
+        top: -300px;
+    }
+
+    80% {
+        opacity: 1;
+        width: 270px;
+        top: -170px;
+    }
+
+    100% {
+        top: -200px;
+        opacity: 1;
+        width: 300px;
+    }
+}
+
+.title img {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.title.active:hover img {
+    opacity: 1;
+}
+
+/* 각 개별 게임 타이틀 */
+.box1 {
+    --b: 0;
+}
+
+.box2 {
+    --b: 75;
+}
+
+.box3 {
+    --b: 150;
+}
+
+.box4 {
+    --b: 225;
+}
+
+.box5 {
+    --b: 300;
+}
+
+/* 타이틀별 위치조절위해  n/360 (0==360) 하여 해당위치값 부여 */
+
+/* title 카드 보더 효과 */
+.title a .border {
+    transition: all 0.3s;
+}
+
+.title a:hover .border {
+    transform: scale(1.2);
+    box-shadow: 0 20px 50px rgb(23, 65, 90);
+    border: 2px solid #88F8FF;
+    border-radius: 12px;
+}
+
+/* brand_story */
+#brand_story {
+    display: flex;
+    justify-content: center;
+}
+
+#brand_story figure {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+#brand_story figure .Glow {
+    width: 65%;
+    height: 65%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.5s;
+}
+
+.Glow::before,
+.Glow::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 80%;
+    border-radius: 10%;
+    opacity: 0.5;
+    filter: blur(60px);
+}
+
+.Glow::before {
+    background-color: #3700ff;
+    z-index: -2;
+    animation: backglow1 10s ease infinite;
+}
+
+@keyframes backglow1 {
+    0% {
+        transform: translate(10%, 10%) scale(0.9);
+        opacity: 0.5;
+    }
+
+    25% {
+        transform: translate(10%, 10%) scale(0.8);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(10%, 10%) scale(1);
+        opacity: 0.8;
+    }
+
+    75% {
+        transform: translate(10%, 10%) scale(1);
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: translate(10%, 10%) scale(0.9);
+        opacity: 0.5;
+    }
+}
+
+.Glow::after {
+    background-color: #00f7ff;
+    z-index: -1;
+    animation: backglow2 10s ease infinite;
+}
+
+@keyframes backglow2 {
+    0% {
+        transform: translate(10%, 10%) scale(1);
+        opacity: 0.5;
+    }
+
+    25% {
+        transform: translate(10%, 10%) scale(1.1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(10%, 10%) scale(1.2);
+        opacity: 0.8;
+    }
+
+    75% {
+        transform: translate(10%, 10%) scale(1.1);
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: translate(10%, 10%) scale(1);
+        opacity: 0.5;
+    }
+}
+
+#brand_story figure .Glow .pig {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#brand_story figure .Glow img {}
+
+#brand_story figure figcaption {
+    width: 45%;
+    height: 100vh;
+    margin-left: 5%;
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+    justify-content: center;
+}
+
+#brand_story figure figcaption h3 {
+    font-size: 2.2rem;
+    margin-bottom: 70px;
+    color: #88c6ff;
+    font-family: "Montserrat", sans-serif;
+}
+
+#brand_story figure figcaption .Brandtext{
+    display: inline;
+    font-size: 1.375rem;
+    font-family: 'Pretendard';
+    font-weight: 300;
+    line-height: 1.8;
+    color: #fff;
+    white-space: nowrap;
+}
+
+/* award */
+#award {
+    width: 100%;
+    height: 450vh;
+    display: flex;
+    /* background-color: #fff; */
+    position: relative;
+}
+
+/* award_text */
+#award_text {
+    position: fixed;
+    /* #text > ul > li의 기준점 */
+    right: 0;
+    width: 50%;
+    height: 100vh;
+    color: #fff;
+    display: none;
+}
+
+#award_text>ul {}
+
+#award_text>ul>li {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 220px;
+    left: 150px;
+    opacity: 0;
+    box-sizing: border-box;
+}
+
+#award_text>ul>li.active {
+    opacity: 1;
+
+}
+
+#award_text>ul>li>h3 {
+    font-size: 2rem;
+    margin-bottom: 200px;
+    color: #88c6ff;
+    font-family: "Montserrat", sans-serif;
+}
+
+#award_text>ul>li>span {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-weight: 300;
+    font-family: "Montserrat", sans-serif;
+}
+
+#award_text>ul>li>h4 {
+    font-size: 3.2rem;
+    margin-bottom: 50px;
+    font-family: 'Pretendard';
+    font-weight: 600;
+    line-height: 1.3;
+    position: relative;
+}
+
+#award_text>ul>li>h4::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: 1.1em;
+    transform: rotateX(180deg);
+    transform-origin: bottom;
+    background: linear-gradient(to top, #88c6ff 0%, transparent 95%);
+    -webkit-background-clip: text;
+    color: transparent;
+    opacity: 0.3;
+}
+
+#award_text>ul>li>p {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+/* award_retext */
+#award_retext {
+    display: none;
+}
+
+/* game */
+#award_img {
+    position: absolute;
+    left: 0;
+    height: 400vh;
+}
+
+#award_img>figure {
+    width: 50%;
+    height: 100vh;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    overflow: hidden;
+}
+
+#award_img .no1 {
+    /* top: 0; */
+    /* 첫번째 no1을 top:0으로 지정하면 처음 시작할 때 한번 튕겼다가 시작 */
+}
+
+#award_img .no2 {
+    top: 100vh;
+}
+
+#award_img .no3 {
+    top: 200vh;
+}
+
+#award_img .no4 {
+    top: 300vh;
+}
+
+#award_img>figure>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* new */
+#new {
+    width: 100%;
+    height: 100vh;
+    /* height: 300vh;
+    원래 300vh인데 텍스트가 자꾸 위로 올라갔다
+    내려가는게 보여서 100vh로 변경 확인 */
+    position: relative;
+    overflow: hidden;
+}
+
+#new .new_box {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background-attachment: fixed;
+    background: url(../images/4_new/new_bg.png) center/cover;
+    /* position: absolute; */
+    top: 0;
+    left: 100%;
+}
+
+#new .new_box .in_left {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100vh;
+}
+
+#new .new_box .in_left>img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+}
+
+#new .new_box_txt {
+    left: -100%;
+    top: 50%;
+    height: 100vh;
+    width: 100%;
+    color: #fff;
+    z-index: 1000;
+    box-sizing: border-box;
+
+}
+
+#new .new_box_txt .text {
+    position: absolute;
+    top: 50%;
+    left: 15%;
+    transform: translateY(-50%);
+}
+
+#new .new_box_txt .text span {
+    display: inline-block;
+    font-size: 1.7rem;
+    font-family: "Montserrat", sans-serif;
+    margin-bottom: 18px;
+}
+
+#new .new_box_txt .text h4 {
+    font-size: 5.3rem;
+    margin-bottom: 48px;
+    font-family: 'Pretendard';
+    font-weight: 600;
+}
+
+#new .new_box_txt .text p {
+    font-size: 2.9rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+}
+
+/* #new .new_box.on{
+  left: 0%;
+
+} */
+#new .new_box>img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.in_left {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+.in_left .left_img {
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    top: 50%;
+    right: 15%;
+    transform: translateY(-50%);
+    border: 2px solid #8fe4eb;
+    border-radius: 12vw;
+    object-fit: cover;
+}
+
+/* 시작, 끝 페이지 */
+.start_screen,
+.end_screen {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(12px, 9vw, 60px);
+    color: #f1f1f1;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.start_screen .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+}
+
+/* .son */
+.son {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* son img 부분 */
+.son_left {
+    width: 30vw;
+    height: 30vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(to top left, #40e9ff -80%, #060D11 50%);
+    border-radius: 20px;
+    border: 1px solid #88C6FF;
+    margin-right: 4vw;
+    box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+}
+
+.son_left .son_img {
+    width: 100%;
+    height: 100%;
+}
+
+.son_left .son_img img {
+    width: 100%;
+}
+
+/* 팀장 애니메이션 부분 */
+.son_left .son_txt {
+    width: 7vw;
+    text-align: center;
+    position: absolute;
+    bottom: 27%;
+    left: 21%;
+    font-size: 2rem;
+    font-weight: bold;
+    transform: scale(0);
+    color: orange;
+    /* transform-origin: center center; */
+}
+
+.son_left:hover .son_img {
+    animation: ddiyoung 1s ease-in-out forwards;
+}
+
+@keyframes ddiyoung {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.son_left:hover .son_txt {
+    animation: team 1s ease-in-out forwards;
+}
+
+@keyframes team {
+    0% {
+        transform: scale(0);
+    }
+
+    50% {
+        transform: scale(2);
+    }
+
+    100% {
+        transform: scale(0);
+    }
+}
+
+/* son 텍스트 부분 */
+.son_right {
+    width: 24vw;
+    height: 30vw;
+    background-color: #172025;
+    border-radius: 16px;
+    box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.3);
+    padding: 2vw;
+    box-sizing: border-box;
+    color: #fff;
+    align-items: center;
+    cursor: pointer;
+}
+
+.son_right .son_name {
+    width: 100%;
+    height: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.son_right .son_name span {
+    font-family: 'Pretendard';
+    font-weight: 300;
+    font-size: 1.3rem;
+    color: #8299A7;
+}
+
+.son_right .son_name h3 {
+    font-family: 'Pretendard';
+    font-weight: 600;
+    font-size: 1.9rem;
+    color: #D0E2EC;
+}
+
+.son_right .son_work {
+    line-height: 2.5rem;
+    display: flex;
+    height: 35%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.son_right .son_work p {
+    font-family: 'Pretendard';
+    font-weight: 300;
+    font-size: 1.3rem;
+    color: #D0E2EC;
+    text-align-last: left;
+}
+
+.son_right .son_gage {
+    height: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.son_right .son_gage ul {
+    width: 100%;
+}
+
+.son_right .son_gage ul li {
+    padding: 1.2vw 0;
+    font-family: 'Pretendard';
+    font-weight: 300;
+    color: #fff;
+    border-bottom: 1px solid #4d555e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 2vw;
+}
+
+.son_right .son_gage ul li:last-child {
+    border: none;
+}
+
+.son_right .son_gage ul li span {
+    font-size: 1.3rem;
+    display: block;
+    width: 7vw;
+    text-align-last: left;
+}
+
+.son_right .son_gage ul li p {
+    display: block;
+    width: 15.5vw;
+    height: 1.2vw;
+    background-color: #060D11;
+    transition: box-shadow 0.5s;
+}
+
+.son_right:hover .son_gage ul li.gage1 p {
+    box-shadow: inset 100vw 0 0 0 #88F8FF;
+}
+
+.son_right:hover .son_gage ul li.gage2 p {
+    box-shadow: inset 9vw 0 0 0 #88F8FF;
+}
+
+.son_right:hover .son_gage ul li.gage3 p {
+    box-shadow: inset 2vw 0 0 0 #FF8888;
+}
+
+
+
+/* 카드 스크롤 이벤트 메인페이지 */
+#id_card {
+    width: 100%;
+    height: 500vh;
+    /* background-color: #060D11; */
+}
+
+/* 스티키 적용구간 */
+.sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* 카드스크롤-배경화면 */
+.sticky_background {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10vw;
+}
+
+/* 각 카드 프레임 */
+.card_frame {
+    position: absolute;
+    width: 95vw;
+    height: 30vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+}
+
+/* 각 카드 전체적용구간  */
+.card {
+    width: 24%;
+    /* width: 19%; */
+    height: 100%;
+    flex-shrink: 0;
+    /* 너비 축소 안되도록 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* font-size: 20vw; */
+    transform-style: preserve-3d;
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: perspective(100vw) translateX(100vw) rotateY(180deg);
+    transition: transform 0.1s;
+    color: #88F8FF;
+    border: 1px solid #88C6FF;
+    border-radius: 1vw;
+}
+
+/* 카드 앞면, 뒷면 */
+.front, .back {
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 1vw;
+    overflow: hidden;
+    backface-visibility: hidden;
+    background-image: linear-gradient(to top left, #40e9ff -10%, #060D11 50%);
+    justify-content: center;
+}
+
+/* 카드 앞면 */
+.front {
+    /* display: flex; */
+    /* flex-direction: column; */
+    top: 0;
+    left: 0;
+    align-items: center;
+    font-size: 0.5em;
+    justify-content: center;
+    padding: 2vw;
+    background-color: chocolate;
+    box-sizing: border-box;
+}
+
+/* 카드 텍스트 공통항목 */
+.setup{}
+
+
+/* 레벨 & 이름 */
+#id_card .front .name {
+    text-align: center;
+    height: 30%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#id_card .front .name em {
+    font-size: 1.2rem;
+    /* 폰트사이즈는 vw 쓰지마세요 */
+    font-family: 'Pretendard';
+    font-weight: 300;
+    color: #3e7b83;
+    margin-bottom: 1.2rem;
+}
+
+/* 레벨 직업(mbti) */
+
+/* 레벨 직업(mbti) */
+#id_card .front .name h3 {
+    font-size: 2rem;
+    color: #67c6d3;
+    font-family: 'Pretendard';
+    font-weight: 600;
+}
+
+/* 이름 */
+
+
+/* 맡은 일 */
+#id_card .front .work{
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+/* 맡은 일 항목 */
+#id_card .work p {
+    font-size: 1.3rem;
+    transition: all 0.5s;
+    font-family: "Montserrat", sans-serif;
+    line-height: 2rem;
+}
+
+
+/* 개인능력 */
+#id_card .gage {
+    height: 40%;
+    display: flex;
+    align-items: center;
+}
+
+.work_p {}
+
+#id_card .gage_box {
+    width: 100%;
+ 
+    padding: 0;
+}
+
+#id_card .gage_box li {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+#id_card .gage_box li > span {
+    width: 30%;
+    font-size: 1.2rem;
+    color: #67c6d3;
+    font-family: 'Pretendard';
+    font-weight: 300;
+}
+
+#id_card .gage_box li > p {
+    background-color: #060D11;
+    width: 65%;
+    height: 14px;
+    transition: box-shadow .83s, background-color 0.35s;
+}
+
+.card01 .front:hover .gage_box li:nth-of-type(1)>p {
+    box-shadow: inset 100vw 0 0 0 #88F8FF;
+}
+
+.card01 .front:hover .gage_box li:nth-of-type(2)>p {
+    box-shadow: inset 7.5vw 0 0 0 #88F8FF;
+}
+
+.card01 .front:hover .gage_box li:nth-of-type(3)>p {
+    box-shadow: inset 2vw 0 0 #FF8888;
+}
+
+.card02 .front:hover .gage_box li:nth-of-type(1)>p {
+    box-shadow: inset 100vw 0 0 0 #88F8FF;
+}
+
+.card02 .front:hover .gage_box li:nth-of-type(2)>p {
+    box-shadow: inset 6vw 0 0 0 #88F8FF;
+}
+
+.card02 .front:hover .gage_box li:nth-of-type(3)>p {
+    box-shadow: inset 3.5vw 0 0 #FF8888;
+}
+
+.card03 .front:hover .gage_box li:nth-of-type(1)>p {
+    box-shadow: inset 100vw 0 0 0 #88F8FF;
+}
+
+.card03 .front:hover .gage_box li:nth-of-type(2)>p {
+    box-shadow: inset 8vw 0 0 0 #88F8FF;
+}
+
+.card03 .front:hover .gage_box li:nth-of-type(3)>p {
+    box-shadow: inset 2vw 0 0 #FF8888;
+}
+
+.card04 .front:hover .gage_box li:nth-of-type(1)>p {
+    box-shadow: inset 100vw 0 0 0 #88F8FF;
+}
+
+.card04 .front:hover .gage_box li:nth-of-type(2)>p {
+    box-shadow: inset 7.5vw 0 0 0 #88F8FF;
+}
+
+.card04 .front:hover .gage_box li:nth-of-type(3)>p {
+    box-shadow: inset 1.1vw 0 0 #FF8888;
+}
+
+/* 카드 뒷면 */
+.back {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotateY(180deg);
+}
+
+.card_img {
+    width: 20rem;
+    /* height: 1em; */
+}
+
+/* figure */
+.card_img img {
+    width: 100%;
+}
+
+
+/* 마지막_페이지 */
+.end_screen{
+    width: 100%;
+    height: auto;
+    font-family: 'Pretendard-Regular';
+    display: flex;
+    justify-content: space-around;
+}
+.end_screen .end{
+    display: flex;
+    flex-direction: column;
+    width: 23%;
+    font-size: 18px;
+    align-items: center;
+    justify-content: center;
+}
+.end_screen .end figure{width: 70%;}
+.end_screen .end figure img{width: 100%;}
+.end_screen .end figcaption{width: 85%; height: 6vw;}
+.end_screen .end figcaption span{letter-spacing: 2px;}
+
+
+/* 푸터라인 */
+#footer .container {
+    padding: 0 5% 0 5%;
+}
+
+.footer {
+    height: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    line-height: 150px;
+    text-align: center;
+    padding-top: 10rem;
+}
+
+.footer .f_logo {}
+
+.footer .f_logo img {
+    width: 100%;
+}
+
+.footer .f_menu {}
+
+.footer .f_menu ul {
+    display: flex;
+}
+
+.footer .f_menu ul li {
+    margin-right: 22px;
+}
+
+.footer .f_menu ul li:last-child {
+    margin-right: 0;
+}
+
+.footer .f_menu ul li a {
+    color: #8299A7;
+    transition: all 0.3s;
+    font-family: 'Pretendard';
+    font-weight: 300;
+}
+
+.footer .f_menu ul li a:hover {
+    color: #CDE3F0;
+}
+
+.footer .f_menu ul li:nth-of-type(3) a {
+    color: #b3c9d6;
+}
+
+/* f_link */
+.f_link {
+    display: flex;
+    /* justify-content: center; */
+}
+
+select {
+    width: 8rem;
+    height: 30px;
+    background-color: #2D383E;
+    border: none;
+    color: #fff;
+    font-family: 'Pretendard';
+    font-weight: 300;
+    padding-left: 10px;
+}
+
+/* f_fsns */
+.footer .f_sns {}
+
+.footer .f_sns ul {
+    display: flex;
+}
+
+.footer .f_sns ul li {
+    margin-right: 1.4rem;
+    width: 2.3rem;
+    height: 2.3rem;
+    border: 1px solid #607683;
+    border-radius: 8px;
+    position: relative;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.footer .f_sns ul li:nth-of-type(3) {
+    margin-right: 0;
+}
+
+.footer .f_sns ul li a {
+    width: 100%;
+    height: 100%;
+}
+
+.footer .f_sns ul li a img {
+    width: 1.4rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s;
+}
+
+.footer .f_sns ul li a img:nth-of-type(1) {
+    opacity: 1;
+}
+
+.footer .f_sns ul li a img:nth-of-type(2) {
+    opacity: 0;
+}
+
+.footer .f_sns ul li:hover a img:nth-of-type(2) {
+    opacity: 1;
+}
+
+.footer .f_sns ul li:hover {
+    border: 1px solid #108DE1;
+}
+
+/* f_fcopy */
+.footer .f_copy {
+    text-align: left;
+    width: 100%;
+}
+
+.footer .f_copy span {
+    color: #475361;
+    font-family: 'Pretendard';
+    font-weight: 300;
+}
